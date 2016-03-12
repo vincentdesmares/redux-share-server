@@ -1,0 +1,21 @@
+{
+  "name": "redux-share",
+  "version": "1.0.0",
+  "description": "share redux state between applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baptistemanson/redux-share.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/baptistemanson/redux-share/issues"
+  },
+  "dependencies": {
+    "react-button": "^1.2.1"
+  }
+}
