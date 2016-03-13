@@ -9,7 +9,7 @@ class SubComponent extends React.Component {
 		return (
 			<div>
 				<Button onClick={() => store.dispatch(actions.moveTo(1,2,2)) }>
-					Second Position
+					1 2 2
 				</Button>
 			</div>);
 	}
