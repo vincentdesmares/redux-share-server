@@ -77,14 +77,13 @@ module.exports = [{
   entry: {
     "lib":"./src/all"
   },
-  devtool: 'inline-source-map',
   target:'node',
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].bundle.js",
     publicPath: "/dist/",
     // export itself to a global var
-    libraryTarget: "var",
+    libraryTarget: "commonjs2",
     // name of the global var: "Foo"
     library: "ReduxShare"
   },
