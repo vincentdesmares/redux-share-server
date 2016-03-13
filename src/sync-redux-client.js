@@ -1,4 +1,4 @@
-export default class SyncStore {
+export default class SyncReduxClient {
 	constructor(url) {
 		this.url = url;
 		this.readyToSend = false
@@ -32,6 +32,7 @@ export default class SyncStore {
   				console.log('Sync: dispatching ', action)
   				let result = next(action)
   				if(this.readyToSend) this.send(action);
+  				//should be migrated to a reducer?
   				if(action.type === "@@SYNC-CONNECT") this.init(store);
   				return result;
 		}

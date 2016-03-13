@@ -12,10 +12,10 @@ import {reducer, actions} from './actions.js';
 var store = createStore(reducer, {default:"default"} );
 
 //start the sockets etc.
-var reduxServer = require('./sync-redux-server.js')(store,server);
+var syncReduxServer = require('./sync-redux-server.js')(store,server);
 
 //bind redux server and express
-app.use('/redux',reduxServer.getMiddleware());
+app.use('/redux',syncReduxServer.getMiddleware());
 
 //bind http and express
 server.on('request', app);

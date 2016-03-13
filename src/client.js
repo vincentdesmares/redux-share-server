@@ -6,16 +6,19 @@ import {reducer, actions} from './actions.js'
 import Button from 'react-button'
 import SubComponent from './sub-component.js'
 
-import SyncStore from './sync-redux-client.js';
+import SyncReduxClient from './sync-redux-client.js';
 
 var store;
 
-var sync = new SyncStore('ws://localhost:2000');
+var syncReduxClient = new SyncReduxClient('ws://localhost:2000');
 
 //init
-store = createStore(reducer,applyMiddleware(sync.getClientMiddleware()));
+store = createStore(reducer,applyMiddleware(syncReduxClient.getClientMiddleware()));
 
+//
 store.dispatch({type:"@@SYNC-CONNECT"});
+
+
 //for debug
 window.store = store;
 

@@ -17,7 +17,7 @@ fs.readdirSync('node_modules')
 module.exports = [{
   devtool: "source-map",
   entry: {
-    app:["webpack-hot-middleware/client" ,"./src/index"]
+    app:["webpack-hot-middleware/client" ,"./src/client"]
   },
   target:'web',
   output: {
