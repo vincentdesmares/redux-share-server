@@ -11,7 +11,7 @@ Here is the code to integrate the server side with express:
 //server.js
 
 //start the socket server
-var syncReduxServer = require('./sync-redux-server.js')(store,server);
+var syncReduxServer = require('redux-share').server(store,server);
 
 //bind redux server and express
 app.use('/redux',syncReduxServer.getMiddleware());
@@ -25,6 +25,7 @@ The client a bit more complex, as your need to sync your state with the server u
 
 ```javascript
 //client.js
+var SyncReduxClient = require('redux-share').client;
 
 var syncReduxClient = new SyncReduxClient('ws://localhost:2000');
 
