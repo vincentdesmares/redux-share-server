@@ -8,6 +8,8 @@ export function reducer(state = {} , action) {
 					});
 		}
 		if(action.type === "@@SYNC-SERVER-DUMP") return action.state;
+		
+		return state;
 };
 
 //action creators

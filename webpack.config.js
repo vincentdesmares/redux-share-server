@@ -47,7 +47,7 @@ module.exports = [{
   entry: {
     "server":"./src/server"
   },
-  devtool: "source-map",
+  devtool: 'inline-source-map',
   target:'node',
   output: {
     path: path.join(__dirname, "dist"),
