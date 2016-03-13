@@ -44,7 +44,7 @@ function reducer(state = {} , action) {
 	if(action.type === "@@SYNC-SERVER-DUMP") return action.state;
 }
 
-``
+```
 
 ## List of special actions (client)
 
