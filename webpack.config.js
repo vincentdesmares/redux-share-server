@@ -75,7 +75,7 @@ module.exports = [{
 
 {
   entry: {
-    "lib":"./index"
+    "lib":"./src/all"
   },
   devtool: 'inline-source-map',
   target:'node',

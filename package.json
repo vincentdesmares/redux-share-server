@@ -2,7 +2,7 @@
   "name": "redux-share",
   "version": "1.0.0",
   "description": "share redux state between applications",
-  "main": "index.js",
+  "main": "dist/lib.bundle.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
