@@ -6,7 +6,7 @@ import {reducer, actions} from './actions.js'
 import Button from 'react-button'
 import SubComponent from './sub-component.js'
 
-import SyncReduxClient from './sync-redux-client.js';
+import SyncReduxClient from './../src/sync-redux-client.js';
 
 var store;
 

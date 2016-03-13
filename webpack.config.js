@@ -17,7 +17,8 @@ fs.readdirSync('node_modules')
 module.exports = [{
   devtool: "source-map",
   entry: {
-    app:["webpack-hot-middleware/client" ,"./src/client"]
+    "lib-client":["./src/sync-redux-client"],
+    "example-client":["webpack-hot-middleware/client" ,"./examples/client"]
   },
   target:'web',
   output: {
@@ -45,7 +46,8 @@ module.exports = [{
 },
 {
   entry: {
-    "server":"./src/server"
+    "lib-server":["./src/sync-redux-server"],
+    "example-server":"./examples/server"
   },
   devtool: 'inline-source-map',
   target:'node',
