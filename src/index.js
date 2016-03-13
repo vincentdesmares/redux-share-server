@@ -19,9 +19,6 @@ store.dispatch({type:"@@SYNC-CONNECT"});
 //for debug
 window.store = store;
 
-
-
-
 class Main extends React.Component {
 
 	render() {

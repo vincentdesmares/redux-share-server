@@ -8,14 +8,16 @@ var server = require('http').createServer()
 import { createStore,applyMiddleware } from 'redux';
 import {reducer, actions} from './actions.js';
 
+//create the store.
 var store = createStore(reducer, {default:"default"} );
 
-var reduxServer = require('./sync-redux-server.js')(server);
+//start the sockets etc.
+var reduxServer = require('./sync-redux-server.js')(store,server);
 
-//var  = new SyncReduxServer(server);
+//bind redux server and express
+app.use('/redux',reduxServer.getMiddleware());
 
-app.use('/redux',reduxServer.getMiddleware(store));
-
+//bind http and express
 server.on('request', app);
 
 server.listen(port, function () { console.log('Listening on ' + server.address().port) });

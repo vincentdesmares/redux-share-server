@@ -4,20 +4,21 @@ var express = require('express');
 
 
 class SyncReduxServer {
-  constructor(server) {
+  constructor(store,server) {
     this.wss = new WebSocketServer({ server: server });
+    this.store = store;
     this.wss.on('connection', function connection(socket) {
       socket.on('message', function incoming(message) {
         console.log(message);
         let action = JSON.parse(message);
-        store.dispatch(action);
+        this.store.dispatch(action);
         console.log(store.getState());
-      });
+      }.bind(this));
 
-    });
+    }.bind(this));
   }
 
-  getMiddleware(store) {
+  getMiddleware() {
       var router = express.Router();
 
       router.use(bodyParser.urlencoded({ extended: false }));
@@ -30,20 +31,20 @@ class SyncReduxServer {
         });
         res.send(JSON.stringify({success:true}));
         res.end();
-      });
+      }.bind(this));
 
       router.get('/state', function (req,res) {
-        res.send(JSON.stringify(store.getState(), null, 4));
+        res.send(JSON.stringify(this.store.getState(), null, 4));
         res.end();
-      });
+      }.bind(this));
 
       router.post('/state',function(req,res) {
         console.log("Erasing the state.");
-        store.dispatch({type:'@@SYNC-SERVER-DUMP',state:req.body});
-      });
+        this.store.dispatch({type:'@@SYNC-SERVER-DUMP',state:req.body});
+      }.bind(this));
       return router;
   }
 
 };
 
-module.exports = function(server) {return new SyncReduxServer(server)};
+module.exports = function(store,server) {return new SyncReduxServer(store,server)};
