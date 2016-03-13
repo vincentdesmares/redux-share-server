@@ -12,7 +12,7 @@ export default class SyncReduxClient {
 			//send a state dump
 			this.readyToSend = true;
 			let state = this.store.getState() || {};
-			this.store.dispatch({type:"@@SYNC-SERVER-DUMP",state:state});
+			this.store.dispatch({type:"@@SYNC-CONNECT-SERVER-END",state:state});
 		}.bind(this);
 
 		this.ws.onmessage =  event => {
@@ -33,7 +33,7 @@ export default class SyncReduxClient {
   				let result = next(action)
   				if(this.readyToSend) this.send(action);
   				//should be migrated to a reducer?
-  				if(action.type === "@@SYNC-CONNECT") this.init(store);
+  				if(action.type === "@@SYNC-CONNECT-SERVER-START") this.init(store);
   				return result;
 		}
 	}

@@ -37,11 +37,7 @@ class SyncReduxServer {
         res.send(JSON.stringify(this.store.getState(), null, 4));
         res.end();
       }.bind(this));
-
-      router.post('/state',function(req,res) {
-        console.log("Erasing the state.");
-        this.store.dispatch({type:'@@SYNC-SERVER-DUMP',state:req.body});
-      }.bind(this));
+      
       return router;
   }
 

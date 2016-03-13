@@ -15,8 +15,8 @@ var syncReduxClient = new SyncReduxClient('ws://localhost:2000');
 //init
 store = createStore(reducer,applyMiddleware(syncReduxClient.getClientMiddleware()));
 
-//
-store.dispatch({type:"@@SYNC-CONNECT"});
+
+store.dispatch({type:"@@SYNC-CONNECT-SERVER-START"});
 
 
 //for debug

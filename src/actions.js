@@ -7,7 +7,7 @@ export function reducer(state = {} , action) {
 					y:action.y
 					});
 		}
-		if(action.type === "@@SYNC-SERVER-DUMP") return action.state;
+		if(action.type === "@@SYNC-CONNECT-SERVER-END") return action.state;
 		
 		return state;
 };
