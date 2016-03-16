@@ -54,7 +54,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -70,17 +70,41 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    this.wss = new WebSocketServer({ server: server });
 	    this.store = store;
+	    this.broadcastOnReceive = false;
+	    this.debug = false;
 	    this.wss.on('connection', function connection(socket) {
+	      socket.id = Math.random() * 9999999 + '';
+	      if (this.debug) {
+	        console.log('Assigned id: ' + socket.id);
+	      }
 	      socket.on('message', function incoming(message) {
 	        console.log(message);
 	        var action = JSON.parse(message);
+	        action.senderId = socket.id;
 	        this.store.dispatch(action);
-	        console.log(store.getState());
+	        if (this.debug) {
+	          console.log(store.getState());
+	        }
+	        if (this.broadcastOnReceive) {
+	          this.broadcastToOtherClient(action, socket);
+	        }
 	      }.bind(this));
 	    }.bind(this));
 	  }
 
 	  _createClass(SyncReduxServer, [{
+	    key: 'setDebug',
+	    value: function setDebug() {
+	      var debug = arguments.length <= 0 || arguments[0] === undefined ? false : arguments[0];
+
+	      this.debug = debug;
+	    }
+	  }, {
+	    key: 'setBroadcastOnReceive',
+	    value: function setBroadcastOnReceive(broadcast) {
+	      this.broadcastOnReceive = broadcast;
+	    }
+	  }, {
 	    key: 'getMiddleware',
 	    value: function getMiddleware() {
 	      var router = express.Router();
@@ -89,10 +113,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      router.use(bodyParser.json());
 
 	      router.post('/action', function (req, res) {
-	        console.log("Dispatches an action to all clients", req.body);
-	        this.wss.clients.forEach(function each(client) {
-	          client.send(JSON.stringify(req.body));
-	        });
+	        if (this.debug) {
+	          console.log("Dispatches an action to all clients", req.body);
+	        }
+	        this.spread(req.body);
 	        res.send(JSON.stringify({ success: true }));
 	        res.end();
 	      }.bind(this));
@@ -103,6 +127,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }.bind(this));
 
 	      return router;
+	    }
+	  }, {
+	    key: 'broadcastToOtherClient',
+	    value: function broadcastToOtherClient(action, senderSocket) {
+	      this.wss.clients.forEach(function each(client) {
+	        if (client.id !== senderSocket.id && action.type !== '@@SYNC-CONNECT-SERVER-END') {
+	          client.send(JSON.stringify(action));
+	        }
+	      });
 	    }
 	  }]);
 
